@@ -29,7 +29,7 @@ public class CrimeReportServiceImpl implements CrimeReportService {
         return reportRepository.save(report);
     }
     
-    @Override
+demo/src/main/java/com/example/demo/service/impl    @Override
     public List<CrimeReport> getAllReports() {
         return reportRepository.findAll();
     }
