@@ -14,7 +14,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
 
         Server server = new Server()
-                .url("https://9269.408procr.amypo.ai")
+                .url("https://9257.408procr.amypo.ai/")
                 .description("Remote HTTPS Server");
 
         return new OpenAPI()
