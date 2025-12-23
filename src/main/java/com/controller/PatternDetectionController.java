@@ -17,7 +17,7 @@ public class PatternDetectionController {
     }
 
     @GetMapping
-    public List<PatternDetectionResult> detect() {
+    public List<PatternDetectionResult> detectPatterns() {
         return patternDetectionService.detectPatterns();
     }
 }
