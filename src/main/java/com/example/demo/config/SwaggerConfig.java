@@ -21,3 +21,4 @@ public class SwaggerConfig {
                 .servers(List.of(server));
     }
 }
+
