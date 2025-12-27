@@ -11,9 +11,21 @@ public class Claims {
         data.put(key, value);
     }
 
-    // ✅ THIS is what the test expects
+    // ✅ Used by some tests
     public <T> T get(String key, Class<T> requiredType) {
         Object value = data.get(key);
+        if (value == null) {
+            return null;
+        }
+        return requiredType.cast(value);
+    }
+
+    // ✅ THIS overload is what was missing
+    public <T> T get(String key, String defaultKey, Class<T> requiredType) {
+        Object value = data.get(key);
+        if (value == null) {
+            value = data.get(defaultKey);
+        }
         if (value == null) {
             return null;
         }
