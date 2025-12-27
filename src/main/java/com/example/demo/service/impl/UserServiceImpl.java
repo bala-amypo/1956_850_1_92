@@ -36,21 +36,3 @@
 //                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 //     }
 // }
-
-
-@Override
-public User register(User user) {
-
-    if (userRepo.existsByEmail(user.getEmail())) {
-        throw new RuntimeException("User already exists");
-    }
-
-    // ✅ password hashing (simple but valid)
-    user.setPassword(
-        Base64.getEncoder().encodeToString(
-            user.getPassword().getBytes()
-        )
-    );
-
-    return userRepo.save(user);
-}
