@@ -13,19 +13,14 @@ import java.util.Map;
 public class JwtUtil {
 
     private static final String SECRET_KEY = "mysecretkey";
-    private static final long EXPIRATION_TIME = 1000 * 60 * 60; // 1 hour
+    private static final long EXPIRATION_TIME = 1000 * 60 * 60;
 
-    /* =======================
-       REQUIRED BY TEST CASES
-       ======================= */
-
-    // ✅ Test expects this
+    // ✅ Required by tests
     public String generateToken(String username) {
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        return createToken(new HashMap<>(), username);
     }
 
-    // ✅ Test also uses this version
+    // ✅ Required by tests
     public String generateToken(Long userId, String username, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
@@ -33,7 +28,7 @@ public class JwtUtil {
         return createToken(claims, username);
     }
 
-    // ✅ Test calls parseToken(String)
+    // ✅ Required by tests
     public Claims parseToken(String token) {
         return Jwts.parser()
                 .setSigningKey(SECRET_KEY)
@@ -41,15 +36,11 @@ public class JwtUtil {
                 .getBody();
     }
 
-    /* =======================
-       INTERNAL METHODS
-       ======================= */
-
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
