@@ -11,7 +11,12 @@ public class Claims {
         data.put(key, value);
     }
 
-    // ✅ Used by some tests
+    // ✅ REQUIRED: claims.get("username")
+    public Object get(String key) {
+        return data.get(key);
+    }
+
+    // ✅ REQUIRED: claims.get("username", String.class)
     public <T> T get(String key, Class<T> requiredType) {
         Object value = data.get(key);
         if (value == null) {
@@ -20,7 +25,7 @@ public class Claims {
         return requiredType.cast(value);
     }
 
-    // ✅ THIS overload is what was missing
+    // ✅ REQUIRED: claims.get("username","username",String.class)
     public <T> T get(String key, String defaultKey, Class<T> requiredType) {
         Object value = data.get(key);
         if (value == null) {

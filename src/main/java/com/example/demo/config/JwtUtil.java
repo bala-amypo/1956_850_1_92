@@ -5,17 +5,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtil {
 
-    // ✅ Required by tests
     public String generateToken(String username) {
         return "TOKEN_" + username;
     }
 
-    // ✅ Required by tests
     public String generateToken(Long userId, String username, String role) {
         return "TOKEN_" + userId + "_" + username + "_" + role;
     }
 
-    // ✅ Required by tests
     public Claims parseToken(String token) {
         Claims claims = new Claims();
 
@@ -24,11 +21,6 @@ public class JwtUtil {
         }
 
         String[] parts = token.split("_");
-
-        /*
-         TOKEN_username
-         TOKEN_userId_username_role
-        */
 
         if (parts.length == 2) {
             claims.put("username", parts[1]);
