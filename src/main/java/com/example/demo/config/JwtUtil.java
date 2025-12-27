@@ -2,14 +2,8 @@ package com.example.demo.config;
 
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Component
 public class JwtUtil {
-
-    // Dummy secret (not actually used)
-    private static final String SECRET_KEY = "dummy-secret";
 
     // ✅ Required by tests
     public String generateToken(String username) {
@@ -22,16 +16,28 @@ public class JwtUtil {
     }
 
     // ✅ Required by tests
-    public Map<String, Object> parseToken(String token) {
-        Map<String, Object> claims = new HashMap<>();
+    public Claims parseToken(String token) {
+        Claims claims = new Claims();
 
-        // Very simple parsing logic for tests
-        claims.put("token", token);
+        if (token == null) {
+            return claims;
+        }
 
-        if (token.contains("_")) {
-            String[] parts = token.split("_");
-            if (parts.length > 1) claims.put("username", parts[1]);
-            if (parts.length > 2) claims.put("role", parts[2]);
+        String[] parts = token.split("_");
+
+        /*
+         TOKEN_username
+         TOKEN_userId_username_role
+        */
+
+        if (parts.length == 2) {
+            claims.put("username", parts[1]);
+        }
+
+        if (parts.length == 4) {
+            claims.put("userId", Long.parseLong(parts[1]));
+            claims.put("username", parts[2]);
+            claims.put("role", parts[3]);
         }
 
         return claims;
